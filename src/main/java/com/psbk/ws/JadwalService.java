@@ -35,9 +35,10 @@ public class JadwalService extends MasterConnection{
 		System.out.println("id : "+id);
 		try {
 			createConnection();
-			MyMap jadwal = (MyMap)jt.queryObject("select d.nama, m.nama, j.hari, j.jam, r.nama "
+			MyMap jadwal = (MyMap)jt.queryObject("select  r.nama as nama_ruangan,d.nama as nama_dosen, m.nama as nama_matpel, j.hari, j.jam "
 					+ "from jadwal j, dosen d, matpel m, ruangan r "
-					+ "where  j.id_matpel=m.id and j.id_dosen=d.id and j.id_ruangan=r.id and  j.id = ?", new Object[] {id}, new MyMap());
+					+ "where  j.id_matpel=m.id and j.id_dosen=d.id and j.id_ruangan=r.id and j.id = ?", 
+					new Object[] {id}, new MyMap());
 			closeConnection();
 			if (jadwal != null){
 				result.put("result", jadwal);
@@ -153,14 +154,13 @@ public class JadwalService extends MasterConnection{
 	@GET
 	@Path("/jadwalall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Map getJadwalAll(@PathParam("id") String id){
+	public Map getJadwalAll(){
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("statusId", "1");
 		result.put("message", "INQUIRY BERHASIL");
-		System.out.println("id : "+id);
 		try {
 			createConnection();
-			List jadwal = (List)jt.queryList("select d.nama, m.nama, j.hari, j.jam, r.nama "
+			List jadwal = (List)jt.queryList("select  r.nama as nama_ruangan,d.nama as nama_dosen, m.nama as nama_matpel, j.hari, j.jam "
 					+ "from jadwal j, dosen d, matpel m, ruangan r "
 					+ "where  j.id_matpel=m.id and j.id_dosen=d.id and j.id_ruangan=r.id ", new MyMap());
 			closeConnection();
@@ -174,4 +174,29 @@ public class JadwalService extends MasterConnection{
 		return result;
 	}
 	
+	
+	@GET
+	@Path("/jadwalall/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Map getJadwalAllByIDDosen(@PathParam("id") String id){
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("statusId", "1");
+		result.put("message", "INQUIRY BERHASIL");
+		System.out.println("id : "+id);
+		try {
+			createConnection();
+			List jadwal = (List)jt.queryList("select  r.nama as nama_ruangan,d.nama as nama_dosen, m.nama as nama_matpel, j.hari, j.jam "
+					+ "from jadwal j, dosen d, matpel m, ruangan r "
+					+ "where  j.id_matpel=m.id and j.id_dosen=d.id and j.id_ruangan=r.id and j.id_dosen = ?"
+					, new Object[] {id}, new MyMap());
+			closeConnection();
+			if (jadwal != null){
+				result.put("result", jadwal);
+			}
+		} catch (Exception e) {
+			result.put("Message", "GAGAL KARENA : " +e.getMessage());
+		}
+		
+		return result;
+	}
 }
