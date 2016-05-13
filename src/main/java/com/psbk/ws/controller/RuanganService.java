@@ -1,4 +1,4 @@
-package com.psbk.ws;
+package com.psbk.ws.controller;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;

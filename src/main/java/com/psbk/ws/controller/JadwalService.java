@@ -1,4 +1,4 @@
-package com.psbk.ws;
+package com.psbk.ws.controller;
 
 import com.psbk.ws.common.MasterConnection;
 
@@ -35,7 +35,8 @@ public class JadwalService extends MasterConnection{
 		System.out.println("id : "+id);
 		try {
 			createConnection();
-			MyMap jadwal = (MyMap)jt.queryObject("select  m.id as kode_matkul,r.nama as nama_ruangan,d.nama as nama_dosen, m.nama as nama_matpel, j.hari, j.jam "
+			MyMap jadwal = (MyMap)jt.queryObject("select  m.id as kode_matkul,r.nama as nama_ruangan,"
+					+ "d.nama as nama_dosen, m.nama as nama_matpel, j.hari, j.jam , j.kelas"
 					+ "from jadwal j, dosen d, matpel m, ruangan r "
 					+ "where  j.id_matpel=m.id and j.id_dosen=d.id and j.id_ruangan=r.id and j.id = ?", 
 					new Object[] {id}, new MyMap());
@@ -84,6 +85,7 @@ public class JadwalService extends MasterConnection{
 			data.put("id_matpel", request.getString("id_matpel"));
 			data.put("id_ruangan", request.getInt("id_ruangan"));
 			data.put("id_dosen", request.getString("id_dosen"));
+			data.put("kelas", request.getString("kelas"));
 			
 			jt.insert("jadwal", data);// insert ke tabel
 			respon.put("message", "DATA BERHASIL DISIMPAN");
@@ -138,8 +140,9 @@ public class JadwalService extends MasterConnection{
 			
 			jt.update("update  jadwal set hari = '"+request.getString("hari")+"'"
 					+ ", jam = '"+request.getString("jam")+"', id_matpel = '"+request.getString("id_matpel")+"',"
-							+ "id_ruangan = '"+request.getInt("id_ruangan")+"', id_dosen = '"+request.getString("id_dosen")+"' "
-									+ "where id = '"+request.getInt("id")+"'");// insert ke tabel
+					+ "id_ruangan = '"+request.getInt("id_ruangan")+"', id_dosen = '"
+					+request.getString("id_dosen")+"' , kelas='"+request.getString("kelas")+"'"
+					+ "where id = '"+request.getInt("id")+"'");// insert ke tabel
 			respon.put("message", "DATA BERHASIL DISIMPAN");
 			respon.put("rCode", "00");
 			respon.put("statusId", "1");
@@ -163,7 +166,8 @@ public class JadwalService extends MasterConnection{
 		result.put("message", "INQUIRY BERHASIL");
 		try {
 			createConnection();
-			List jadwal = (List)jt.queryList("select  m.id as kode_matkul, r.nama as nama_ruangan,d.nama as nama_dosen, m.nama as nama_matpel, j.hari, j.jam "
+			List jadwal = (List)jt.queryList("select  m.id as kode_matkul, r.nama as nama_ruangan,"
+					+ "d.nama as nama_dosen, m.nama as nama_matpel, j.hari, j.jam , j.kelas"
 					+ "from jadwal j, dosen d, matpel m, ruangan r "
 					+ "where  j.id_matpel=m.id and j.id_dosen=d.id and j.id_ruangan=r.id ", new MyMap());
 			closeConnection();
@@ -188,7 +192,8 @@ public class JadwalService extends MasterConnection{
 		System.out.println("id : "+id);
 		try {
 			createConnection();
-			List jadwal = (List)jt.queryList("select  m.id as kode_matkul, r.nama as nama_ruangan,d.nama as nama_dosen, m.nama as nama_matpel, j.hari, j.jam "
+			List jadwal = (List)jt.queryList("select  m.id as kode_matkul, r.nama as nama_ruangan,"
+					+ "d.nama as nama_dosen, m.nama as nama_matpel, j.hari, j.jam ,j.kelas"
 					+ "from jadwal j, dosen d, matpel m, ruangan r "
 					+ "where  j.id_matpel=m.id and j.id_dosen=d.id and j.id_ruangan=r.id and j.id_dosen = ?"
 					, new Object[] {id}, new MyMap());

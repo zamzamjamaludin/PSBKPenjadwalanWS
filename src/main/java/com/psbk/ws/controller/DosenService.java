@@ -1,4 +1,4 @@
-package com.psbk.ws;
+package com.psbk.ws.controller;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -20,23 +20,23 @@ import org.codehaus.jettison.json.JSONObject;
 import com.psbk.ws.common.MasterConnection;
 import com.psbk.ws.common.MyMap;
 
-@Path("/mahasiswa")
-public class MahasiswaService extends MasterConnection{
+@Path("/dosen")
+public class DosenService extends MasterConnection{
 
 	@GET
-	@Path("{nrp}")
+	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Map getMahasiswaByNRP(@PathParam("nrp") String nrp){
+	public Map getDosenByID(@PathParam("id") String id){
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("statusId", "1");
 		result.put("message", "INQUIRY BERHASIL");
-		System.out.println("nrp : "+nrp);
+		System.out.println("id : "+id);
 		try {
 			createConnection();
-			MyMap mahasiswa = (MyMap)jt.queryObject("select * from mahasiswa where  nrp = ?", new Object[] {nrp}, new MyMap());
+			MyMap dosen = (MyMap)jt.queryObject("select * from dosen where  id = ?", new Object[] {id}, new MyMap());
 			closeConnection();
-			if (mahasiswa != null){
-				result.put("result", mahasiswa);
+			if (dosen != null){
+				result.put("result", dosen);
 			}
 		} catch (Exception e) {
 			result.put("Message", "GAGAL KARENA : " +e.getMessage());
@@ -73,11 +73,11 @@ public class MahasiswaService extends MasterConnection{
 //				return respon;
 //			}
 //			
-//			data.put("nrp", request.getString("nrp"));
+//			data.put("id", request.getString("id"));
 //			data.put("nama", request.getString("nama"));
 //			data.put("alamat", request.getString("alamat"));
 //			
-//			jt.insert("mahasiswa", data);// insert ke tabel
+//			jt.insert("dosen", data);// insert ke tabel
 //			respon.put("message", "DATA BERHASIL DISIMPAN");
 //			respon.put("rCode", "00");
 //			respon.put("statusId", "1");
@@ -92,19 +92,19 @@ public class MahasiswaService extends MasterConnection{
 //	}
 	
 	@GET
-	@Path("/mhsall")
+	@Path("/dosenall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Map getMahasiswaAll(@PathParam("id") String id){
+	public Map getDosenAll(@PathParam("id") String id){
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("statusId", "1");
 		result.put("message", "INQUIRY BERHASIL");
 		System.out.println("id : "+id);
 		try {
 			createConnection();
-			List mhs = (List)jt.queryList("select nama from mahasiswa", new MyMap());
+			List dosen = (List)jt.queryList("select * from dosen", new MyMap());
 			closeConnection();
-			if (mhs != null){
-				result.put("result", mhs);
+			if (dosen != null){
+				result.put("result", dosen);
 			}
 		} catch (Exception e) {
 			result.put("Message", "GAGAL KARENA : " +e.getMessage());

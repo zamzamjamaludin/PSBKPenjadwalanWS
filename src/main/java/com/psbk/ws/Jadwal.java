@@ -8,6 +8,8 @@ public class Jadwal {
 	private String id_matpel;
 	private int id_ruangan;
 	private String id_dosen;
+	private char kelas;
+	
 	public int getId() {
 		return id;
 	}
@@ -43,6 +45,12 @@ public class Jadwal {
 	}
 	public void setId_dosen(String id_dosen) {
 		this.id_dosen = id_dosen;
+	}
+	public char getKelas() {
+		return kelas;
+	}
+	public void setKelas(char kelas) {
+		this.kelas = kelas;
 	}
 	
 	
