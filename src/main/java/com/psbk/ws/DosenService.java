@@ -3,6 +3,7 @@ package com.psbk.ws;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -88,5 +89,27 @@ public class DosenService extends MasterConnection{
 			respon.put("statusId", "0");
 		}
 		return respon;
+	}
+	
+	@GET
+	@Path("/dosenall")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Map getJadwalAll(@PathParam("id") String id){
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("statusId", "1");
+		result.put("message", "INQUIRY BERHASIL");
+		System.out.println("id : "+id);
+		try {
+			createConnection();
+			List jadwal = (List)jt.queryList("select nama from dosen", new MyMap());
+			closeConnection();
+			if (jadwal != null){
+				result.put("result", jadwal);
+			}
+		} catch (Exception e) {
+			result.put("Message", "GAGAL KARENA : " +e.getMessage());
+		}
+		
+		return result;
 	}
 }

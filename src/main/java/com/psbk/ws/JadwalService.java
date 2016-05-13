@@ -162,7 +162,7 @@ public class JadwalService extends MasterConnection{
 			createConnection();
 			List jadwal = (List)jt.queryList("select d.nama, m.nama, j.hari, j.jam, r.nama "
 					+ "from jadwal j, dosen d, matpel m, ruangan r "
-					+ "where  j.id_matpel=m.id and j.id_dosen=d.id and j.id_ruangan=r.id and  ", new MyMap());
+					+ "where  j.id_matpel=m.id and j.id_dosen=d.id and j.id_ruangan=r.id ", new MyMap());
 			closeConnection();
 			if (jadwal != null){
 				result.put("result", jadwal);
