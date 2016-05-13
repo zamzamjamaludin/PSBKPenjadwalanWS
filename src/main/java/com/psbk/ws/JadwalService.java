@@ -35,7 +35,7 @@ public class JadwalService extends MasterConnection{
 		System.out.println("id : "+id);
 		try {
 			createConnection();
-			MyMap jadwal = (MyMap)jt.queryObject("select  r.nama as nama_ruangan,d.nama as nama_dosen, m.nama as nama_matpel, j.hari, j.jam "
+			MyMap jadwal = (MyMap)jt.queryObject("select  m.id as kode_matkul,r.nama as nama_ruangan,d.nama as nama_dosen, m.nama as nama_matpel, j.hari, j.jam "
 					+ "from jadwal j, dosen d, matpel m, ruangan r "
 					+ "where  j.id_matpel=m.id and j.id_dosen=d.id and j.id_ruangan=r.id and j.id = ?", 
 					new Object[] {id}, new MyMap());
@@ -101,7 +101,7 @@ public class JadwalService extends MasterConnection{
 	
 	
 	
-	@POST
+	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/update")
 	public Object updateMatpel(@Context HttpServletRequest hsr){
@@ -160,7 +160,7 @@ public class JadwalService extends MasterConnection{
 		result.put("message", "INQUIRY BERHASIL");
 		try {
 			createConnection();
-			List jadwal = (List)jt.queryList("select  r.nama as nama_ruangan,d.nama as nama_dosen, m.nama as nama_matpel, j.hari, j.jam "
+			List jadwal = (List)jt.queryList("select  m.id as kode_matkul, r.nama as nama_ruangan,d.nama as nama_dosen, m.nama as nama_matpel, j.hari, j.jam "
 					+ "from jadwal j, dosen d, matpel m, ruangan r "
 					+ "where  j.id_matpel=m.id and j.id_dosen=d.id and j.id_ruangan=r.id ", new MyMap());
 			closeConnection();
@@ -185,7 +185,7 @@ public class JadwalService extends MasterConnection{
 		System.out.println("id : "+id);
 		try {
 			createConnection();
-			List jadwal = (List)jt.queryList("select  r.nama as nama_ruangan,d.nama as nama_dosen, m.nama as nama_matpel, j.hari, j.jam "
+			List jadwal = (List)jt.queryList("select  m.id as kode_matkul, r.nama as nama_ruangan,d.nama as nama_dosen, m.nama as nama_matpel, j.hari, j.jam "
 					+ "from jadwal j, dosen d, matpel m, ruangan r "
 					+ "where  j.id_matpel=m.id and j.id_dosen=d.id and j.id_ruangan=r.id and j.id_dosen = ?"
 					, new Object[] {id}, new MyMap());
