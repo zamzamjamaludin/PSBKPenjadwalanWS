@@ -5,6 +5,7 @@ import com.psbk.ws.common.MasterConnection;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -149,6 +150,28 @@ public class JadwalService extends MasterConnection{
 	}
 	
 	
-	
+	@GET
+	@Path("/jadwalall")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Map getJadwalAll(@PathParam("id") String id){
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("statusId", "1");
+		result.put("message", "INQUIRY BERHASIL");
+		System.out.println("id : "+id);
+		try {
+			createConnection();
+			List jadwal = (List)jt.queryList("select d.nama, m.nama, j.hari, j.jam, r.nama "
+					+ "from jadwal j, dosen d, matpel m, ruangan r "
+					+ "where  j.id_matpel=m.id and j.id_dosen=d.id and j.id_ruangan=r.id and  ", new MyMap());
+			closeConnection();
+			if (jadwal != null){
+				result.put("result", jadwal);
+			}
+		} catch (Exception e) {
+			result.put("Message", "GAGAL KARENA : " +e.getMessage());
+		}
+		
+		return result;
+	}
 	
 }
