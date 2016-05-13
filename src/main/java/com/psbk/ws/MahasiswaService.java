@@ -20,23 +20,23 @@ import org.codehaus.jettison.json.JSONObject;
 import com.psbk.ws.common.MasterConnection;
 import com.psbk.ws.common.MyMap;
 
-@Path("/dosen")
-public class DosenService extends MasterConnection{
+@Path("/mahasiswa")
+public class MahasiswaService extends MasterConnection{
 
 	@GET
-	@Path("{id}")
+	@Path("{nrp}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Map getDosenByID(@PathParam("id") String id){
+	public Map getMahasiswaByNRP(@PathParam("nrp") String nrp){
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("statusId", "1");
 		result.put("message", "INQUIRY BERHASIL");
-		System.out.println("id : "+id);
+		System.out.println("nrp : "+nrp);
 		try {
 			createConnection();
-			MyMap dosen = (MyMap)jt.queryObject("select * from dosen where  id = ?", new Object[] {id}, new MyMap());
+			MyMap mahasiswa = (MyMap)jt.queryObject("select * from mahasiswa where  nrp = ?", new Object[] {nrp}, new MyMap());
 			closeConnection();
-			if (dosen != null){
-				result.put("result", dosen);
+			if (mahasiswa != null){
+				result.put("result", mahasiswa);
 			}
 		} catch (Exception e) {
 			result.put("Message", "GAGAL KARENA : " +e.getMessage());
@@ -73,11 +73,11 @@ public class DosenService extends MasterConnection{
 //				return respon;
 //			}
 //			
-//			data.put("id", request.getString("id"));
+//			data.put("nrp", request.getString("nrp"));
 //			data.put("nama", request.getString("nama"));
 //			data.put("alamat", request.getString("alamat"));
 //			
-//			jt.insert("dosen", data);// insert ke tabel
+//			jt.insert("mahasiswa", data);// insert ke tabel
 //			respon.put("message", "DATA BERHASIL DISIMPAN");
 //			respon.put("rCode", "00");
 //			respon.put("statusId", "1");
@@ -92,19 +92,19 @@ public class DosenService extends MasterConnection{
 //	}
 	
 	@GET
-	@Path("/dosenall")
+	@Path("/mhsall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Map getDosenAll(@PathParam("id") String id){
+	public Map getMahasiswaAll(@PathParam("id") String id){
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("statusId", "1");
 		result.put("message", "INQUIRY BERHASIL");
 		System.out.println("id : "+id);
 		try {
 			createConnection();
-			List dosen = (List)jt.queryList("select nama from dosen", new MyMap());
+			List mhs = (List)jt.queryList("select nama from mahasiswa", new MyMap());
 			closeConnection();
-			if (dosen != null){
-				result.put("result", dosen);
+			if (mhs != null){
+				result.put("result", mhs);
 			}
 		} catch (Exception e) {
 			result.put("Message", "GAGAL KARENA : " +e.getMessage());
