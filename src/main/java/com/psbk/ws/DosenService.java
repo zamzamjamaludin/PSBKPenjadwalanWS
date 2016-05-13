@@ -101,7 +101,7 @@ public class DosenService extends MasterConnection{
 		System.out.println("id : "+id);
 		try {
 			createConnection();
-			List dosen = (List)jt.queryList("select nama from dosen", new MyMap());
+			List dosen = (List)jt.queryList("select * from dosen", new MyMap());
 			closeConnection();
 			if (dosen != null){
 				result.put("result", dosen);

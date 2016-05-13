@@ -101,7 +101,7 @@ public class RuanganService extends MasterConnection{
 		System.out.println("id : "+id);
 		try {
 			createConnection();
-			List ruangan = (List)jt.queryList("select nama from ruangan", new MyMap());
+			List ruangan = (List)jt.queryList("select * from ruangan", new MyMap());
 			closeConnection();
 			if (ruangan != null){
 				result.put("result", ruangan);

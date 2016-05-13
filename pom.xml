@@ -129,7 +129,7 @@ http://maven.apache.org/maven-v4_0_0.xsd">
 				<artifactId>maven-jetty-plugin</artifactId>
 				<version>6.1.26</version>
 				<configuration>
-					<contextPath>/Service</contextPath>
+					<contextPath>/Penjadwalan</contextPath>
 					<connectors>
 						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
 							<port>9090</port>

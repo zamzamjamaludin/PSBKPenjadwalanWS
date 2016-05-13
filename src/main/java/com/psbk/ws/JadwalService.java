@@ -101,7 +101,7 @@ public class JadwalService extends MasterConnection{
 	
 	
 	
-	@PUT
+	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/update")
 	public Object updateMatpel(@Context HttpServletRequest hsr){
@@ -109,7 +109,7 @@ public class JadwalService extends MasterConnection{
 		String line = null;
 		JSONObject request = null;
 		MyMap respon = new MyMap();
-		MyMap data = new MyMap();
+		//MyMap data = new MyMap();
 		DataInputStream in;
 		
 		try {
@@ -129,14 +129,17 @@ public class JadwalService extends MasterConnection{
 				return respon;
 			}
 			
-			data.put("id", request.getInt("id"));
-			data.put("hari", request.getString("hari"));
-			data.put("jam", request.getString("jam"));
-			data.put("id_matpel", request.getString("id_matpel"));
-			data.put("id_ruangan", request.getInt("id_ruangan"));
-			data.put("id_dosen", request.getString("id_dosen"));
+//			data.put("id", request.getInt("id"));
+//			data.put("hari", request.getString("hari"));
+//			data.put("jam", request.getString("jam"));
+//			data.put("id_matpel", request.getString("id_matpel"));
+//			data.put("id_ruangan", request.getInt("id_ruangan"));
+//			data.put("id_dosen", request.getString("id_dosen"));
 			
-			jt.updateData( data,"jadwal");// insert ke tabel
+			jt.update("update  jadwal set hari = '"+request.getString("hari")+"'"
+					+ ", jam = '"+request.getString("jam")+"', id_matpel = '"+request.getString("id_matpel")+"',"
+							+ "id_ruangan = '"+request.getInt("id_ruangan")+"', id_dosen = '"+request.getString("id_dosen")+"' "
+									+ "where id = '"+request.getInt("id")+"'");// insert ke tabel
 			respon.put("message", "DATA BERHASIL DISIMPAN");
 			respon.put("rCode", "00");
 			respon.put("statusId", "1");
@@ -199,4 +202,6 @@ public class JadwalService extends MasterConnection{
 		
 		return result;
 	}
+	
+	
 }
