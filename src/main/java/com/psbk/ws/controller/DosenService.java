@@ -112,4 +112,8 @@ public class DosenService extends MasterConnection{
 		
 		return result;
 	}
+	
+	
+	
+	
 }
